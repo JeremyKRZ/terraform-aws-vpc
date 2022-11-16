@@ -109,6 +109,8 @@ resource "aws_instance" "nat" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = ["${aws_security_group.sg.id}"]
   subnet_id              = aws_subnet.public[each.key].id
+  source_dest_check = false
+  key_name = aws_key_pair.deployer.key_name
   tags = {
     Name        = "${var.vpc-name}-nat-${var.aws_region}${each.key}"
     Environment = var.env
